@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp> // Общий файл.
+#include <ext/pb_ds/tree_policy.hpp> // Содержит класс tree_order_statistics_node_update
+ 
+ 
+using namespace std;
+using namespace __gnu_pbds;
+#define int long long
+#define ld long double
+#define endl '\n'
+const int N = 4 * 1e5 + 11;
+const int mod = 998244353;
+const int INF = 1e9;
+#define all(a) (a).begin(), (a).end()
+#define rall(a) (a).rbegin(), (a).rend()
+const ld eps = 1e-12;
+// Норм прочитать условие
+// Комба 2 способа
+//
+signed main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    int tt;
+    cin >> tt;
+    while(tt--) {
+        int n,k;
+        cin >> n >> k;
+        vector<int> a(k);
+        for (int i = 0; i < k; ++i) {
+            cin >> a[i];
+        }
+        int nah = 0;
+        if (a[0] <= 1) {
+            nah = a[0];
+        } else {
+            nah = (a[0] - 1 + (n - k + 1)) / (n - k + 1) ;
+        }
+        bool ok = true;
+        for (int i = 1; i < k; ++i) {
+            if (a[i] - a[i - 1] < nah) {
+                ok = false;
+                break;
+            } else {
+                nah = a[i] - a[i - 1];
+            }
+        }
+        if (ok) cout <<"YES" << endl;
+        else cout << "NO" << endl;
+    }
+}
