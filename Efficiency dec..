@@ -1,0 +1,135 @@
+
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+
+    static int N = 100010;
+    static int[] map = new int[N], cnt = new int[N];
+
+    public static void main(String[] args) throws IOException {
+        FastScanner f = new FastScanner();
+        PrintWriter w = new PrintWriter(System.out);
+        int n = f.nextInt();
+        int[] a = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            HashSet<Integer> set = new HashSet<>();
+            a[i] = f.nextInt();
+            int x = a[i];
+            int t = 0;
+            while (x < N / 2) {
+                if (!set.contains(x)) {
+                    set.add(x);
+                    map[x] += t;
+                    cnt[x]++;
+                }
+                x *= 2;
+                t++;
+            }
+            x = a[i];
+            t = 0;
+            while (x >= 1) {
+                if (!set.contains(x)) {
+                    set.add(x);
+                    map[x] += t;
+                    cnt[x]++;
+                }
+                x /= 2;
+                t++;
+            }
+            x = 1;
+            t--;
+            while (x < N / 2) {
+                if (!set.contains(x)) {
+                    set.add(x);
+                    map[x] += t;
+                    cnt[x]++;
+                }
+                x *= 2;
+                t++;
+            }
+        }
+        long ans = Integer.MAX_VALUE;
+        for (int i = 1; i < N; i++) {
+            if (cnt[i] == n) ans = Math.min(ans, map[i]);
+        }
+        w.println(ans);
+        w.flush();
+    }
+
+    private static class FastScanner {
+        final private int BUFFER_SIZE = 1 << 16;
+        private DataInputStream din;
+        private byte[] buffer;
+        private int bufferPointer, bytesRead;
+
+        private FastScanner() throws IOException {
+            din = new DataInputStream(System.in);
+            buffer = new byte[BUFFER_SIZE];
+            bufferPointer = bytesRead = 0;
+        }
+
+        private short nextShort() throws IOException {
+            short ret = 0;
+            byte c = read();
+            while (c <= ' ') c = read();
+            boolean neg = (c == '-');
+            if (neg) c = read();
+            do ret = (short) (ret * 10 + c - '0');
+            while ((c = read()) >= '0' && c <= '9');
+            if (neg) return (short) -ret;
+            return ret;
+        }
+
+        private int nextInt() throws IOException {
+            int ret = 0;
+            byte c = read();
+            while (c <= ' ') c = read();
+            boolean neg = (c == '-');
+            if (neg) c = read();
+            do ret = ret * 10 + c - '0';
+            while ((c = read()) >= '0' && c <= '9');
+            if (neg) return -ret;
+            return ret;
+        }
+
+        public long nextLong() throws IOException {
+            long ret = 0;
+            byte c = read();
+            while (c <= ' ') c = read();
+            boolean neg = (c == '-');
+            if (neg) c = read();
+            do ret = ret * 10 + c - '0';
+            while ((c = read()) >= '0' && c <= '9');
+            if (neg) return -ret;
+            return ret;
+        }
+
+        private char nextChar() throws IOException {
+            byte c = read();
+            while (c <= ' ') c = read();
+            return (char) c;
+        }
+
+        private String nextString() throws IOException {
+            StringBuilder ret = new StringBuilder();
+            byte c = read();
+            while (c <= ' ') c = read();
+            do {
+                ret.append((char) c);
+            } while ((c = read()) > ' ');
+            return ret.toString();
+        }
+
+        private void fillBuffer() throws IOException {
+            bytesRead = din.read(buffer, bufferPointer = 0, BUFFER_SIZE);
+            if (bytesRead == -1) buffer[0] = -1;
+        }
+
+        private byte read() throws IOException {
+            if (bufferPointer == bytesRead) fillBuffer();
+            return buffer[bufferPointer++];
+        }
+    }
+}
