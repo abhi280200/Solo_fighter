@@ -1,0 +1,70 @@
+#include<bits/stdc++.h>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
+#define go(); ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define all(v) v.begin(),v.end()
+#define rall(v) v.rbegin(),v.rend()
+#define debug(x) cout<<#x<<" "<<x<<endl;
+using namespace std;
+using namespace __gnu_pbds;
+template<typename T>
+using ordered_set=tree <T,null_type,less<T>,rb_tree_tag,tree_order_statistics_node_update>;
+typedef long long ll;
+typedef long double ld;
+const ll mod=998244353;
+const ll mxn=5e3+3;
+const ll inf=1e18;
+ 
+
+ 
+void init_code()
+{
+	#ifndef ONLINE_JUDGE
+	freopen("input.txt","r",stdin);
+	freopen("output.txt","w",stdout);
+	#endif
+}
+void solve()
+{
+	ll n,k;
+	cin>>n>>k;
+	ll a[k];
+	for(int i=0;i<k;i++)
+		cin>>a[i];
+	if(k==1)
+	{
+		cout<<"Yes\n";
+		return;
+	}
+
+	 ll x=a[0];
+	for(int i=0;i<k-2;i++)
+	{
+		if(a[i+1]-a[i]>a[i+2]-a[i+1])
+		{
+			cout<<"No\n";
+			return;
+		}
+	}
+	x=a[1]-a[0];
+	if(a[0]-(n-k+1ll)*x<=0)
+		cout<<"Yes\n";
+	else 
+		cout<<"No\n";
+}
+int main()
+{
+ 
+    go();
+    init_code();
+    int t=1;
+   	cin>>t;
+  
+    while(t--)
+    {
+    	
+        solve();
+        
+    }
+    return 0;
+}
