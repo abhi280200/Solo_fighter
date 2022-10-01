@@ -45,7 +45,6 @@ signed main() {
                 nah = a[i] - a[i - 1];
             }
         }
-        if (ok) cout <<"YES" << endl;
-        else cout << "NO" << endl;
+       
     }
 }
