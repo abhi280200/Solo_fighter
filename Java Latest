@@ -1,0 +1,68 @@
+import java.util.Scanner;
+ 
+public class B_prefix_sum {
+ 
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		for(int f = 1; f<=T; f++)
+		{
+			int n = sc.nextInt();
+			int k = sc.nextInt();
+			int arr[] = new int[k];
+			for(int i=0; i<k; i++)
+			{
+				arr[i] = sc.nextInt();
+			}
+			int ans[] = new int[n];
+			int i = n-1;
+			int j = k-1;
+			while(j >= 1)
+			{
+				ans[i] = arr[j] - arr[j-1];
+			    i--;
+			    j--;
+			}
+			boolean check = true;
+			for(int p=i+1; p<n-1; p++)
+			{
+				if(ans[p]>ans[p+1])
+				{
+					check = false;
+					break;
+				}
+			}
+			if(n==1 || k==1)
+			{
+				System.out.println("YES");
+			}
+			else if(check)
+			{
+				if(arr[j]>ans[i+1])
+				{
+					int rem = i + 1;
+					long sum = rem*ans[i+1];
+					if(arr[j]<=sum)
+					{
+						System.out.println("YES");
+					}
+					else
+					{
+						System.out.println("NO");
+					}
+				}
+				else
+				{
+					System.out.println("YES");
+				}
+			}
+			else
+			{
+				System.out.println("NO");
+			}
+		}
+	
+	}
+ 
+}
