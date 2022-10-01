@@ -1,0 +1,86 @@
+#define _CRT_SECURE_NO_WARNINGS
+#ifndef ONLINE_JUDGE
+#include"stdc++.h"
+#else
+#include <bits/stdc++.h>
+#endif
+using namespace std;
+typedef long long ll;
+#define def_swap(type) void swap(type *a,type *b){type *c;c=a;a=b;b=c;return;}
+#define ST std::ios::sync_with_stdio(false);std::cin.tie(0);std::cout.tie(0);
+#define Case(t) ST;int t;std::cin>>t;while(t--)
+#define endl "\n"
+
+
+int n, k;
+vector<int>ori;
+struct st
+{
+	int data, pos;
+	bool operator<(st b)
+	{
+		if (data < b.data) return true;
+		else if (data == b.data)return pos < b.pos;
+		else return false;
+	}
+};
+vector<st>sorted;
+bool check(int pos)
+{
+	deque<int>d;
+	for (int i = 1; sorted[i].data <= pos; ++i)
+		d.emplace_back(sorted[i].pos);
+	sort(d.begin(), d.end());
+	int i = 0;
+	while (i < (int)d.size() - 2)
+	{
+		if (d[i] + 1 == d[i + 1] && d[i + 1] + 1 == d[i + 2] && d[i + 1] != pos)
+			d.erase(d.begin() + i + 1);
+		else ++i;
+	}
+	i = 0;
+	while (i < (int)d.size() - 1)
+	{
+		if (d[i] + 1 == d[i + 1])
+		{
+			if(d[i]==pos)
+				d.erase(d.begin() + i + 1);
+			else
+				d.erase(d.begin() + i);
+		}
+		else ++i;
+	}
+	int lst = k - (int)d.size();
+	for (int i = 0; i < (int)d.size()-1; ++i)
+	{
+		if (d[i + 1] - d[i] > 0)--lst;
+		else ++lst;
+	}
+	if (d[0] > 0)--lst;
+	if (d.size()&&d[d.size() - 1] < n)--lst;
+	return lst <= 0;
+}
+int find(int f, int t)
+{
+	if (f == t)return f;
+	int mid = (f + t) >> 1;
+	if (check(mid)) return find(f, mid);
+	else return find(mid + 1, t);
+}
+int main()
+{
+	ST;
+	cin >> n >> k;
+	ori = vector<int>(n + 1);
+	ori[0] = 0;
+	sorted = vector<st>(n + 1);
+	sorted[0] = { 0,0 };
+	for (int i = 1; i <= n; ++i)
+	{
+		cin >> ori[i];
+		sorted[i] = { ori[i] ,i };
+	}
+	sort(sorted.begin() + 1, sorted.begin() + 1 + n);
+	cout << find((k + 1) / 2, n) << endl;
+}
+	  	 					  	   		   	   			
