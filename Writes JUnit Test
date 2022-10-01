@@ -74,6 +74,14 @@ inline void ypa(){
 			q[R]=tmpp;
 		}
 	}
+	else
+	{
+	if(tmp!=INF){
+			for(int i=tmp;i<R;i++)q[i]=q[i+1];
+			q[R]=tmpp;
+		}
+	
+	}
 	puc('\n');
 }
 signed main(){init();for(int T=read();T;T--)ypa();flush();return 0;}
