@@ -1,0 +1,32 @@
+#include <stdio.h>
+int main()
+{	
+	int n,m,a[9]={0},i,j,one,t=1;
+	scanf("%d",&n);
+	for(m=n;m!=0;m/=10)
+	{
+		one=m%10;
+		switch(one)
+		{
+			case 9:j=9;break;
+			case 8:j=8;break;
+			case 7:j=7;break;
+			case 6:j=6;break;
+			case 5:j=5;break;
+			case 4:j=4;break;
+			case 3:j=3;break;
+			case 2:j=2;break;
+			case 1:j=1;break;
+			default:j=0;
+		}
+		for(i=0;i<j;i++)
+			a[i]+=t;
+		t*=10;
+	}
+	for(i=0;i<9;i++)
+		if(a[i])
+		printf("%d ",a[i]);
+	printf("\b\n");
+	return 0;
+}
+     								  			    	  	
