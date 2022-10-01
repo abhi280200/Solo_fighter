@@ -39,17 +39,17 @@ public class B_prefix_sum {
 			}
 			else if(check)
 			{
-				if(arr[j]>ans[i+1])
+				if(arr[j]<ans[i+1])
 				{
 					int rem = i + 1;
 					long sum = rem*ans[i+1];
 					if(arr[j]<=sum)
 					{
-						System.out.println("YES");
+						System.out.println("NO");
 					}
 					else
 					{
-						System.out.println("NO");
+						System.out.println("YES");
 					}
 				}
 				else
