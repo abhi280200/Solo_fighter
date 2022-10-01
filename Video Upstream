@@ -1,0 +1,112 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> X[200005];
+int P[18][200005], level[200005];
+
+void dfs(int x, int par, int lvl)
+{
+    P[0][x] = par;
+    level[x] = lvl;
+    
+    for (auto y : X[x])
+        if (y != par)
+            dfs(y, x, lvl + 1);
+}
+
+int LCA(int a, int b)
+{
+    if (level[a] > level[b])
+        swap(a, b);
+    
+    int d = level[b] - level[a];
+    
+    for (int i = 17; i >= 0; i--)
+        if (d & (1 << i))
+            b = P[i][b];
+    
+    if (a == b)
+        return a;
+    
+    for (int i = 17; i >= 0; i--)
+        if (P[i][a] != P[i][b])
+            a = P[i][a], b = P[i][b];
+    
+    return P[0][a];
+}
+
+int main(){
+    
+    int n;
+    cin >> n;
+    
+    for (int i = 1; i <= n - 1; i++)
+    {
+        int u, v;
+        cin >> u >> v;
+        
+        X[u].push_back(v);
+        X[v].push_back(u);
+    }
+    
+    dfs(1, 1, 0);
+    
+    for (int i = 1; i < 18; i++)
+        for (int j = 1; j <= n; j++)
+            P[i][j] = P[i - 1][ P[i - 1][j] ];
+    
+    int q;
+    cin >> q;
+    
+    while (q--)
+    {
+        int k;
+        cin >> k;
+        
+        vector< pair<int, int> > V(k);
+        
+        for (int i = 0; i < k; i++)
+        {
+            cin >> V[i].second;
+            V[i].first = level[ V[i].second ];
+        }
+        
+        sort (V.begin(), V.end());
+        reverse (V.begin(), V.end());
+        
+        int a = 0, b = 0, flag = 0;
+        
+        for (int i = 0; i < k; i++)
+        {
+            int x = V[i].second;
+            
+            if (a == 0)
+                a = x;
+            else
+            {
+                if (LCA(a, x) == x)
+                    continue;
+                
+                if (b == 0)
+                    b = x;
+                else
+                {
+                    if (LCA(b, x) == x)
+                        continue;
+                    else
+                        flag = 1;
+                }
+            }
+        }
+        
+        if (b > 0 && V.back().first < level[ LCA(a, b) ])
+            flag = 1;
+        
+        if (flag)
+            cout << "NO\n";
+        else
+            cout << "YES\n";
+    }
+    
+    return 0;
+}
