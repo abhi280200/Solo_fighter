@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long int
+
+    int main(){
+int t;
+cin>>t;
+while(t--){
+    int n;
+    cin>>n;
+    int arr[n];
+    int cnte=0;
+    int cnto=0;
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+        if(arr[i]%2==0){
+            cnte++;
+        }
+        else{
+            cnto++;
+        }
+    }
+    int flag=1;
+    int x=cnte/2;
+    int y=cnto/2;
+    if(cnte%2==0 && x%2!=0){
+        flag=0;
+    }
+    if(cnto%2==0 && y%2!=0){
+        flag=0;
+    }
+    if(flag==0){
+        cout<<"Bob"<<endl;
+    }
+    else{
+        cout<<"Alice"<<endl;
+    }
+}
+    return 0;
+}
