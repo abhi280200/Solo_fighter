@@ -1,0 +1,79 @@
+#include<bits/stdc++.h>
+#define ll long long
+#define ull unsigned ll
+#define INF 0x3f3f3f3f
+#define INFLL 0x3f3f3f3f3f3f3f3fll
+using namespace std;
+#define Ci const int
+#define Cl const ll
+#define Cul const ull
+#define Cc const char
+#define _c_ getchar()
+const int M=998244353;
+inline int Add(Ci x){return x>=M?x-M:x;}
+inline int Add(Ci x,Ci p){return x>=p?x-p:x;}
+const int inS=1<<18,ouS=1<<18;int _p,_l=-1;
+char _b[ouS],_d[55],_c[inS],*_u=_c,*_v=_c;
+#ifdef ONLINE_JUDGE
+#define getchar() (_u==_v&&(_v=(_u=_c)+fread(_c,1,inS,stdin),_u==_v)?EOF:*_u++)
+#endif
+template<typename T=int>inline T read(){
+    char ch=_c_;T X=0;bool fl=0;while(ch<48||ch>57)fl|=(ch==45),ch=_c_;
+    while(ch>47&&ch<58)X=X*10+(ch^48),ch=_c_;if(fl)return-X;return X;
+}
+inline char Gec(){char ch=_c_;while(ch<33)ch=_c_;return ch;}
+inline int Ges(char*K){
+    int L=0;char ch=_c_;while(ch<33)ch=_c_;
+    while(ch>32)*K++=ch,ch=_c_,++L;*K++=0;return L;
+}
+template<typename T>inline void read(T B,const T E){for(;B!=E;B++)*B=read();}
+inline void flush(){fwrite(_b,1,_l+1,stdout);_l=-1;}
+inline void _pc(Cc&C){if(C!=-1)_b[++_l]=C;}
+inline void _chf(){if(_l>(ouS>>1))flush();}
+inline void puc(Cc&C){_b[++_l]=C;}
+inline void pus(Cc*K,Cc&C=10){while(*K)_b[++_l]=*K++;_pc(C);_chf();}
+inline void write(Cc&C){_b[++_l]=C;}
+inline void write(Cc*K){while(*K)_b[++_l]=*K++;_chf();}
+template<typename T>inline void write(T X,Cc&C=-1){
+    if(X<0)_b[++_l]=45,X=-X;do{_d[++_p]=(X%10)|48;}while(X/=10);
+    do{_b[++_l]=_d[_p];}while(--_p);_pc(C);_chf();
+}
+template<typename T,typename...A>void write(const T&X,const A&...a){write(X);write(a...);}
+template<typename T>inline void writel(T B,const T E,Cc&c=' ',Cc&e='\n'){
+    for(;B!=E;)write(*B),_pc(++B!=E?c:e);
+}
+#define Writel(x) template<typename T>inline void writel(const x<T>&g,Cc&c=' ',Cc&e='\n'){writel(g.begin(),g.end(),c,e);}
+Writel(initializer_list);Writel(vector);Writel(set);Writel(multiset);
+inline void init(){
+//	freopen("1.in","r",stdin);
+//	freopen("1.out","w",stdout);
+}
+#define int long long
+int n,m,q[500005],a[500005],b[500005],f[105][105],L,R;
+vector<int>v[500005];
+inline void ypa(){
+	for(int i=0;i<=n+1;i++)v[i].clear();
+	n=read();int k=0;
+	v[0].push_back(n+1);
+	for(int i=1;i<=n;i++){
+		a[i]=read();k=max(k,min(i,a[i]));
+		v[a[i]].push_back(i);
+	}
+	write(k,'\n');
+	q[L=R=1]=0;
+	while(L<=R){
+		int u=q[L++];
+		if(u&&u<=n)write(u,' ');
+		int tmp=INF,tmpp;
+		for(int I:v[u]){
+			q[++R]=I;
+			if(v[I].size())tmp=R,tmpp=I;
+		}
+		if(tmp!=INF){
+			for(int i=tmp;i<R;i++)q[i]=q[i+1];
+			q[R]=tmpp;
+		}
+	}
+	puc('\n');
+}
+signed main(){init();for(int T=read();T;T--)ypa();flush();return 0;}
