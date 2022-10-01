@@ -87,7 +87,7 @@ void solve()
     }
   }
 
-  queue<int> q, t;
+  priority_queue<int> q, t;
   
   for (auto x: lefts) {
     if (!m[x].empty()) t.push(x);
