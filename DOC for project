@@ -1,0 +1,76 @@
+#import io,os
+#input = io.BytesIO(os.read(0, os.fstat(0).st_size)).readline
+
+def unionfind(group,root):
+    son = root
+    while root!=group[root]:  
+        root = group[root]
+    while son != root:
+        temp = group[son]
+        group[son] = root
+        son = group[temp]
+
+    return root 
+
+
+def query(index,times,visited):
+    output = []
+    for _ in range(times):
+        print("?",index+1)
+        neigh = int(input())
+        output.append(neigh-1)
+        if visited[neigh-1]: break
+
+    return output 
+
+ 
+
+
+
+
+def main(t):
+
+    n = int(input())
+    degree = list(map(int,input().split()))
+
+    group = [i for i in range(n)]
+
+    visited = [False]*n
+    for i in range(n):  
+        if degree[i]==0:  visited[i] = True
+
+    while True:
+        maxdegree = 0
+        maxindex = -1
+        for i in range(n):
+            if visited[i]: continue 
+            if degree[i] > maxdegree: 
+                maxdegree = degree[i]
+                maxindex = i
+
+        if maxindex < 0:  break
+
+        neighbors = query(maxindex,maxdegree,visited)
+        visited[maxindex] = True
+        for ele in neighbors:
+            root1 = unionfind(group,maxindex)
+            root2 = unionfind(group,ele)
+            group[max(root1,root2)] = min(root1,root2)
+
+            visited[ele] = True
+
+        
+
+    for i in range(n):  group[i] = unionfind(group,i) 
+    for i in range(n):  group[i] += 1
+
+    group = " ".join(map(str,group))
+    print("!",group)
+
+
+
+T = int(input())
+t = 1
+while t<=T:
+    main(t)
+    t += 1
