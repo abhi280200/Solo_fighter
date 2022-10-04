@@ -1,0 +1,16 @@
+ else {
+      if (i + 1 < b[i]) {
+        if (k == -1) {
+          k = i + 1;
+        }
+        else k = max(i + 1, k);
+      }
+      else {
+        if (k == -1) {
+          k = i;
+        }
+        else k = min(i, k);
+      }
+      m[b[i]].pb(i + 1);
+    }
+  }
