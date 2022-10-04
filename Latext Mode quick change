@@ -1,0 +1,15 @@
+ while (!q.empty()) {
+    edges = m[q.front()];
+    vi w;
+    for (auto x : edges) {
+      if (m[x].empty())
+        res.pb(x);
+      else
+        w.pb(x);
+      q.push(x);
+    }
+    for (auto x : w) {
+      res.pb(x);
+    }
+    q.pop();
+  }
