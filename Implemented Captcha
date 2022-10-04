@@ -1,0 +1,12 @@
+int main()
+{
+  ios::sync_with_stdio(0); cin.tie(0);
+  int t = 1;
+  cin >> t;
+  while(t--) {
+    solve();
+  }
+}
+#define f first
+#define s second
+#define piob push_back
