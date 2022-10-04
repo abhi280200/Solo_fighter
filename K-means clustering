@@ -1,0 +1,96 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define MAX 128
+
+// Function to check whether a character is
+// vowel or not
+bool isVowel(char x)
+{
+	return (x == 'a' || x == 'e' || x == 'i' ||
+			x == 'o' || x == 'u' || x == 'A' ||
+			x == 'E' || x == 'I' || x == 'O' ||
+			x == 'U');
+}
+
+int KDistinctVowel(char s[], int k)
+{
+	// length of string
+	int n = strlen(s);
+
+	// array for count of characters
+	int c[MAX];
+	memset(c, 0, sizeof(c));
+
+	// Initialize result to be
+	// negative
+	int result = -1;
+
+	for (int i = 0, j = -1; i < n; ++i) {
+
+		int x = s[i];
+
+		// If letter is vowel then we
+		// increment its count value
+		// and decrease the k value so
+		// that if we again encounter the
+		// same vowel character then we
+		// don't consider it for our result
+		if (isVowel(x)) {
+			if (++c[x] == 1) {
+
+				// Decrementing the K value
+				--k;
+			}
+		}
+
+		// Till k is 0 above if condition run
+		// after that this while loop condition
+		// also become active. Here what we have
+		// done actually is that, if K is less
+		// than 0 then we eliminate the first
+		// vowel we have encountered till that
+		// time . Now K is incremented and k
+		// becomes 0. So, now we calculate the
+		// length of substring from the present
+		// index to the deleted index of vowel
+		// which result in our results.
+		while (k < 0) {
+
+			x = s[++j];
+			if (isVowel(x)) {
+
+				// decreasing the count
+				// so that it may appear
+				// in another substring
+				// appearing after this
+				// present substring
+				if (--c[x] == 0) {
+
+					// incrementing the K value
+					++k;
+				}
+			}
+		}
+
+		// Checking the maximum value
+		// of the result by comparing
+		// the length of substring
+		// whenever K value is 0 means
+		// K distinct vowel is present
+		// in substring
+		if (k == 0)
+			result = max(result, i - j);	
+	}
+	return result;
+}
+
+// Driver code
+int main(void)
+{
+	char s[] = "tHeracEBetwEEntheTwo";
+	int k = 1;
+	cout << KDistinctVowel(s, k);
+	return 0;
+}
