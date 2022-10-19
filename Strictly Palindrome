@@ -1,0 +1,34 @@
+class Solution {
+public:
+  bool   fun(int n,int b)
+     {
+         string ans="";
+         while(n)
+         {
+             ans+=n%b+'0';
+             n=n/b;
+     
+         }
+
+        int i=0;
+        int j=ans.size()-1;
+        while(i<j)
+            {
+                if(ans[i]!=ans[j])
+                    return false;
+            i++;
+            j--;
+            }
+    return true;
+
+     }
+
+
+    bool isStrictlyPalindromic(int n) {
+        
+       for(int i=2;i<=n-2;i++)
+        if(!fun(n,i))return false;
+    return true; 
+
+    }
+};
